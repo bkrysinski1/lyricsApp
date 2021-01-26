@@ -2,6 +2,7 @@ package com.restApp.controllers;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,5 +23,11 @@ public class SongController {
 	public List<Song> getSong() {
 		List<Song> getSong = songDAO.findAll();
 		return getSong;
+	}
+	
+	@RequestMapping(path = "/song/{id}", method = RequestMethod.GET)
+	public Song getSongById(@PathVariable("id")long songId) {
+		Song getSongById = songDAO.getSongById(songId);
+		return getSongById;
 	}
 }

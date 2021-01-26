@@ -6,4 +6,5 @@ import com.restApp.model.Song;
 
 public interface SongDAO {
 	List<Song> findAll();
+	Song getSongById(long songId);
 }

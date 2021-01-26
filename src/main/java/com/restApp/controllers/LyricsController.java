@@ -1,8 +1,9 @@
 package com.restApp.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,13 +22,25 @@ public class LyricsController {
 	
 	@RequestMapping(path = "/lyrics", method = RequestMethod.GET)
 	public List<Lyrics> getLyrics() {
-		List<Lyrics> getLyrics = lyricsDAO.findAll();
-//		List<Lyrics> lyrics = new ArrayList();
-		
-//		Lyrics lyric = new Lyrics(); // replace lines with a DAO
-//		lyric.setLyric("myLyricTest");
-//		lyrics.add(lyric);
-		
+		List<Lyrics> getLyrics = lyricsDAO.findAll();		
 		return getLyrics;
+	}
+	
+	@RequestMapping(path = "/lyrics/{id}", method = RequestMethod.GET)
+	public Lyrics getLyricById(@PathVariable("id")long lyricId) {
+		Lyrics getLyricById = lyricsDAO.getLyricById(lyricId);
+		return getLyricById;
+	}
+	
+	@RequestMapping(path = "/lyrics/random", method = RequestMethod.GET)
+	public Lyrics getRandomLyric() {
+		Random lyricGenerator = new Random();
+		int countLyrics = lyricsDAO.findAll().size();
+		long RandomId = lyricGenerator.nextInt((countLyrics) + 1);
+		while (RandomId == 0) {
+			RandomId = lyricGenerator.nextInt((countLyrics) + 1);
+		}
+		Lyrics getRandomLyric = lyricsDAO.getLyricById(RandomId);
+		return getRandomLyric;
 	}
 }

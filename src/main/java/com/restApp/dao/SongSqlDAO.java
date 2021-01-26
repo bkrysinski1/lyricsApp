@@ -31,6 +31,17 @@ public class SongSqlDAO implements SongDAO {
 		return songs;
 	}
 	
+	@Override
+	public Song getSongById(long songId) {
+		String sql = "SELECT * FROM song WHERE song_id = ?";
+		SqlRowSet results = jdbcTemplate.queryForRowSet(sql, songId);
+		if(results.next()) {
+			return mapRowToSong(results);
+		} else {
+			throw new RuntimeException("songId " + songId + "was not found.");
+		}
+	}
+	
 	private Song mapRowToSong(SqlRowSet rs) {
 		Song song = new Song();
 		song.setSong_id(rs.getLong("song_id"));

@@ -31,6 +31,17 @@ public class LyricsSqlDAO implements LyricsDAO {
 		}
 		return lyrics;
 	}
+	
+	@Override
+	public Lyrics getLyricById(long lyricId) {
+		String sql = "SELECT * FROM lyrics WHERE lyric_id = ?";
+		SqlRowSet results = jdbcTemplate.queryForRowSet(sql, lyricId);
+		if(results.next()) {
+			return mapRowToLyrics(results);
+		} else {
+			throw new RuntimeException("lyricId " + lyricId + "was not found.");
+		}
+	}
 
 	private Lyrics mapRowToLyrics(SqlRowSet rs) {
 		Lyrics lyrics = new Lyrics();

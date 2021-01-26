@@ -6,4 +6,5 @@ import com.restApp.model.Lyrics;
 
 public interface LyricsDAO {
 	List<Lyrics> findAll();
+	Lyrics getLyricById(long lyricId);
 }
