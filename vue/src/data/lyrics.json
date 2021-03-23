@@ -1,0 +1,14 @@
+[
+    {
+        "lyrics": "These are lyrics to song 1",
+        "answer": "This is the author and title to song 1"
+    },
+    {
+        "lyrics": "These are lyrics to song 2",
+        "answer": "This is the author and title to song 2"
+    },
+    {
+        "lyrics": "These are lyrics to song 3",
+        "answer": "This is the author and title to song 3"
+    }
+]
