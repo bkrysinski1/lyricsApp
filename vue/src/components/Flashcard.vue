@@ -105,7 +105,7 @@ export default {
     cursor:pointer;
     text-align: center;
     background-color: limegreen;
-    background-image: linear-gradient(white,black, limegreen);
+    background-image: linear-gradient(red, white, blue);
     border: 1px black;
     border-style: solid;
     border-radius: 10px;

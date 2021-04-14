@@ -19,6 +19,9 @@ export default new Vuex.Store({
         flipCard (state) {
             state.cardFlipped = !state.cardFlipped
         },
+        setLyrics (state, lyricsArray) {
+            state.lyrics = lyricsArray
+        }
     },
     state: {
         unansweredLyrics: [],
@@ -27,6 +30,8 @@ export default new Vuex.Store({
             answer: 'Sample answer'
         },
         cardFlipped: false,
+
+        lyrics: []
     },
 
     getters: {

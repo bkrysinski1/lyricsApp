@@ -1,29 +1,58 @@
 <template>
   <div id="app">
+  <!--  <Lyrics v-bind:lyrics="lyrics" /> -->
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/Level1">Difficulty Level 1</router-link> |
+      <router-link to="/">Random Difficulty</router-link> |
+      <router-link to="/level1">Difficulty Level 1</router-link> |
       <router-link to="/level2">Difficulty Level 2</router-link> |
       <router-link to="/level3">Difficulty Level 3</router-link> 
     </div>
     <router-view />
     
-    <flashcard :front="lyrics" :back="answer"></flashcard>
+  <!--  <flashcard :front="lyrics" :back="answer"></flashcard> -->
   </div>
 </template>
 
 <script>
 //import flashcard from './components/Flashcard.vue'
+//import Lyrics from './components/Lyrics';
+import LyricService from './services/LyricService'
+
 export default {
+  name: 'app',
   components: {
+ //   Lyrics
   //  flashcard,
   },
-  data() {
-    return {
-      lyrics: 'Sample lyrics',
-      answer: 'Sample answer',
-    }
+  created() {
+    LyricService.getLyrics().then(response => {
+   //   this.lyrics = response.data;
+      this.$store.commit('setLyrics', response.data)
+    })
   },
+ /* data() {
+    return {
+      lyrics: [
+        {
+          id: 1,
+          lyric: "Sample Lyrics 1",
+          answer: "Sample Answer 1"
+        },
+        {
+          id: 2,
+          lyric: "Sample Lyrics 2",
+          answer: "Sample Answer 2"
+        },
+        {
+          id: 3,
+          lyric: "Sample Lyrics 3",
+          answer: "Sample Answer 3"
+        }
+      ]
+     // lyrics: 'Sample lyrics',
+     // answer: 'Sample answer',
+    }
+  },*/
 }
 </script>
 

@@ -1,181 +1,257 @@
 <template>
-    <div>
-        <div class="level1"> 
-            <h1> Welcome to Difficulty Level 1</h1>
-        </div>
-        <div @click="isToggle=!isToggle" v-bind:style="{backgroundColor: colorFront, color: colorTextFront}" v-show="!isToggle" class="animated flipInX flashcard1">
-            <div class="card-header" style="padding-bottom: 15px;"> {{headerFront}}</div>
-            <div class="card-content center">
-                <p v-bind:style="{fontSizeFront, fontWeight: 'bold'}">{{front}}</p>
-                <img v-if="imgFront!=''" :src="imgFront" width="200" height="200">
-            </div>
-            <div class="card-footer" style="margin: 75px;">{{footerFront}}</div>
-        </div>
-        <div @click="isToggle=!isToggle" v-bind:style="{backgroundColor: colorBack, color: colorTextBack}" v-show="isToggle" class="animated flipInX flashcard1">
-            <div class="card-header" style="padding-bottom: 15px;"> {{headerBack}}</div>
-            <div class="card-content center">
-                <p v-bind:style="{fontSize: textSizeBack, fontWeight: 'bold'}">{{back}}</p>
-                <img v-if="imgBack!=''" :src="imgBack" width="200" height="200">
-            </div>
-            <div class="card-footer">{{footerBack}}</div>
-        </div>
-
-    <!--<div class="level1">
+  <div>
+    <div class="level1">
       <h1>Welcome to Difficulty Level 1</h1>
     </div>
-      <div class="flashcard1">
+    <div
+      @click="isToggle = !isToggle"
+      v-bind:style="{ backgroundColor: colorFront, color: colorTextFront }"
+      v-show="!isToggle"
+      class="animated flipInX flashcard1"
+    >
+      <div class="card-header" style="padding-bottom: 15px">
+        {{ headerFront }}
       </div>
-      ZZ<flashcard/>ZZ -->
+      <div class="card-content center">
+        <p v-bind:style="{ fontWeight: 'bold' }">{{ randomLevel1.lyric }}</p>
+        <p>{{ randomLyricSong.genre }}</p>
+        <p>{{ randomLevel1.year_released }}</p>
+        <img v-if="imgFront != ''" :src="imgFront" width="200" height="200" />
+      </div>
+      <div class="card-footer" style="margin: 75px">{{ footerFront }}</div>
     </div>
+    <div
+      @click="isToggle = !isToggle"
+      v-bind:style="{ backgroundColor: colorBack, color: colorTextBack }"
+      v-show="isToggle"
+      class="animated flipInX flashcard1"
+    >
+      <div class="card-header" style="padding-bottom: 15px">
+        {{ headerBack }}
+      </div>
+      <div class="card-content center">
+        <p v-bind:style="{ fontSize: textSizeBack, fontWeight: 'bold' }">
+          {{ randomLyricArtist.artist_name }}
+        </p>
+        <p v-bind:style="{ fontSize: textSizeBack }">
+          {{ randomLyricSong.title }}
+        </p>
+        <img v-if="imgBack != ''" :src="imgBack" width="200" height="200" />
+      </div>
+      <div class="card-footer">{{ footerBack }}</div>
+    </div>
+    <button v-on:click="getNextRandomLyric">Next Lyric</button>
+  </div>
 </template>
 
 <script>
-import LyricService from '../services/LyricService'
+import LyricService from "../services/LyricService";
+import ArtistService from "../services/ArtistService";
+import SongService from "../services/SongService";
 //import Flashcard from '../components/Flashcard'
 export default {
   name: "level1",
   components: {
-  //  Flashcard
+    //  Flashcard
   },
 
   data() {
     return {
       isToggle: false,
-      lyrics: []
-    }
+      randomLevel1: {
+        lyrics: "",
+      },
+      randomLyricArtist: {},
+      randomLyricSong: {},
+      //  return this.$store.state.lyrics[0];
+
+      //  lyrics: []
+    };
   },
   props: {
     imgFront: {
-        type: String,
-        default: ''
+      type: String,
+      default: "",
     },
     imgBack: {
-        type: String,
-        default: ''
+      type: String,
+      default: "",
     },
     front: {
-        type: String,
-        default: 'default front'
+      type: String,
+      default: "default front",
     },
     back: {
-        type: String,
-        default: 'default back'
+      type: String,
+      default: "default back",
     },
     textSizeFront: {
-        type: String,
-        default: '2em'
+      type: String,
+      default: "2em",
     },
     textSizeBack: {
-        type: String,
-        default: '2em'
+      type: String,
+      default: "2em",
     },
     colorTextFront: {
-        type: String,
-        default: 'black'
+      type: String,
+      default: "black",
     },
     colorTextBack: {
-        type: String,
-        default: 'white'
+      type: String,
+      default: "white",
     },
     colorFront: {
-        type: String,
-        default: 'white'
+      type: String,
+      default: "white",
     },
     colorBack: {
-        type: String,
-        default: '#2ecc71'
+      type: String,
+      default: "#2ecc71",
     },
     headerFront: {
-        type: String,
-        default: 'How well do you know these lyrics?'
+      type: String,
+      default: "How well do you know these lyrics?",
     },
     headerBack: {
-        type: String,
-        default: 'Answer'
+      type: String,
+      default: "Answer",
     },
     footerFront: {
-        type: String,
-        default: 'Click once to reveal the answer'
+      type: String,
+      default: "Click once to reveal the answer",
     },
     footerBack: {
-        type: String,
-        default: 'Click the Next Lyric button to continue'
-    }
+      type: String,
+      default: "Click the Next Lyric button to continue",
+    },
   },
+  /*computed: {
+      randomLevel1() {
+          return this.$store.state.lyrics[0];
+      }
+  },*/
   created() {
-    LyricService.getLyrics().then(response => {
-      this.lyrics = response.data;
-    })
+    LyricService.getRandomLyric().then((response) => {
+      this.randomLevel1 = response.data;
+
+      SongService.getSongById(this.randomLevel1.song_id).then((response) => {
+        this.randomLyricSong = response.data;
+
+        ArtistService.getArtistById(this.randomLyricSong.artist_id).then(
+          (response) => {
+            this.randomLyricArtist = response.data;
+          }
+        );
+      });
+    });
+
+    //1) MOVE randomLevel1 to DATA
+    //        -in Data make randomLyricArtist
+    //        -in Data make randomLyricSong
+    //2) In CREATED, set randomLevel1 to a random lyric in this.$store.state.lyrics
+    //        finding any random lyric
+    //3) create service to get Artist by id  (randomLevel1.artistId)-> Eclipse
+    //        -save in randomLyricArtist
+    //4) create service to get Song by id   (randomLevel1.songId)-> Eclipse
+    //        - save in randomLyricSong
+    //5) UPdate line 17 to have the answer
+    //        {{randomSong.title}} - {{randomLyricArtist.name}}
   },
   methods: {
+    /**
+     * 1) create a method and put the contents of CREATED() in it
+     * 2) call the method from CREATED()
+     * 3) add the button to the HTML
+     * 4) v-on the button click call the new method
+     * ---
+     * 1) update randomLyric java code to accept a parameter for the lyric level
+     */
+    getNextRandomLyric() {
+      LyricService.getRandomLyric().then((response) => {
+        this.randomLevel1 = response.data;
+
+        SongService.getSongById(this.randomLevel1.song_id).then((response) => {
+          this.randomLyricSong = response.data;
+
+          ArtistService.getArtistById(this.randomLyricSong.artist_id).then((response) => {
+              this.randomLyricArtist = response.data;
+              this.isToggle = false;
+          });
+        });
+      });
+    },
+  /*  resetToggle() {
+      this.isToggle = false;
+    },*/
     viewLyrics(id) {
       this.$router.push(`/lyric/${id}`);
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style>
-.level1 h1{
-  @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
-  font-family: 'Quicksand', sans-serif;
+.level1 h1 {
+  @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap");
+  font-family: "Quicksand", sans-serif;
   text-align: center;
   width: 100%;
   /*margin: 5px;*/
   color: purple;
   background-color: rgb(7, 12, 12);
-  background-image: radial-gradient( aqua, blue, purple);
+  background-image: radial-gradient(aqua, blue, purple);
   opacity: 90%;
 }
 
 .center {
-    text-align: center;
+  text-align: center;
 }
 .flashcard1 {
-    cursor:pointer;
-    text-align: center;
-    background-color: blue;
-    background-image: radial-gradient(aqua, blue, purple);
-    border: 1px black;
-    border-style: solid;
-    border-radius: 10px;
-    box-shadow: 0 0px rgba(0, 0, 0, 0.4);
-    margin: auto;
-    height: 300px;
-    width: 400px;
+  cursor: pointer;
+  text-align: center;
+  background-color: blue;
+  background-image: radial-gradient(aqua, blue, purple);
+  border: 1px black;
+  border-style: solid;
+  border-radius: 10px;
+  box-shadow: 0 0px rgba(0, 0, 0, 0.4);
+  margin: auto;
+  height: 300px;
+  width: 400px;
 }
 .flashcard1:hover {
-    box-shadow: 0 0px 25px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0px 25px rgba(0, 0, 0, 0.8);
 }
 .animated {
-    animation-duration: 1s;
-    animation-fill-mode: both;
+  animation-duration: 1s;
+  animation-fill-mode: both;
 }
 
 @keyframes flipInX {
-    from {
-        transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
-        animation-timing-function: ease-in;
-        opacity: 0;
-    }
-    40% {
-        transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
-        animation-timing-function: ease-in;
-    }
-    60% {
-        transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
-        opacity: 1;
-    }
-    80% {
-        transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
-    }
-    to {
-        transform: perspective(400px);
-    }
+  from {
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+  40% {
+    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    animation-timing-function: ease-in;
+  }
+  60% {
+    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+    opacity: 1;
+  }
+  80% {
+    transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+  }
+  to {
+    transform: perspective(400px);
+  }
 }
 
 .flipInX {
-    backface-visibility: visible !important;
-    animation-name: flipInX;
+  backface-visibility: visible !important;
+  animation-name: flipInX;
 }
 </style>

@@ -1,11 +1,19 @@
-/*
+
 INSERT INTO song (artist_id, title, genre, year_released, difficulty_level)
-VALUES (9, 'Cheeseburger in Paradise', 'Country Rock', 1978, 1);
+VALUES (15, 'Bluebird', 'Country', 2019, 3);
 
 INSERT INTO lyrics (song_id, lyrics, year_released, difficulty_level)
-VALUES (13, 'I like mine with lettuce and tomato\nHeinz 57 and French fried potatoes\nBig kosher pickle and a cold draft beer\nWell good God almighty which way do I steer', 1978, 1);
-*/
+VALUES (20, 'And if the house just keeps on winning\nI got a wildcard up my sleeve\nAnd if love keeps giving me lemons\nI''ll just mix ''em in my drink', 2019, 3);
+/*
+INSERT INTO artist (artist_name)
+VALUES ('Dan + Shay');
 
+INSERT INTO artist (artist_name)
+VALUES ('Blake Shelton');
+
+INSERT INTO artist (artist_name)
+VALUES ('Miranda Lambert');
+*/
 /*
 SELECT title, artist_name
 FROM song
@@ -38,7 +46,7 @@ FROM lyrics
 JOIN song
 ON lyrics.song_id = song.song_id
 GROUP BY song.title;
-*/
+
 SELECT COUNT(artist_id)
 FROM artist;
 SELECT COUNT(title)
@@ -51,3 +59,4 @@ SELECT AVG(CNT) FROM(
 SELECT COUNT(artist_id) AS CNT, artist_id
 FROM song
 GROUP BY artist_id) artist_count;
+*/

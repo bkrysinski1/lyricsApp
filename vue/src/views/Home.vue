@@ -7,7 +7,7 @@
         <div @click="isToggle=!isToggle" v-bind:style="{backgroundColor: colorFront, color: colorTextFront}" v-show="!isToggle" class="animated flipInX flashcardhome">
             <div class="card-header" style="padding-bottom: 15px;"> {{headerFront}}</div>
             <div class="card-content center">
-                <p v-bind:style="{fontSizeFront, fontWeight: 'bold'}">{{front}}</p>
+                <p v-bind:style="{fontWeight: 'bold'}">{{front}}</p>
                 <img v-if="imgFront!=''" :src="imgFront" width="200" height="200">
             </div>
             <div class="card-footer" style="margin: 75px;">{{footerFront}}</div>
@@ -66,7 +66,7 @@ export default {
     },
     colorTextBack: {
         type: String,
-        default: 'green'
+        default: 'red'
     },
     colorFront: {
         type: String,
@@ -91,7 +91,8 @@ export default {
     footerBack: {
         type: String,
         default: 'Click the Next Lyric button to continue'
-    }
+    },
+   
   },
   mounted() {
     console.log('Component mounted')
