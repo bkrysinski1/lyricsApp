@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.restApp.dao.LyricsDAO;
@@ -35,14 +36,18 @@ public class LyricsController {
 	}
 	
 	@RequestMapping(path = "/lyrics/random", method = RequestMethod.GET)
-	public Lyrics getRandomLyric() {
+	public Lyrics getRandomLyric(@RequestParam(required = false)Integer difficultyLevel) {
 		Random lyricGenerator = new Random();
+		long RandomId = 0;
+		if (difficultyLevel == null) {
 		int countLyrics = lyricsDAO.findAll().size();
-		long RandomId = lyricGenerator.nextInt((countLyrics) + 1);
+		RandomId = lyricGenerator.nextInt((countLyrics) + 1);
 		while (RandomId == 0) {
 			RandomId = lyricGenerator.nextInt((countLyrics) + 1);
 		}
-		Lyrics getRandomLyric = lyricsDAO.getLyricById(RandomId);
+		}Lyrics getRandomLyric = lyricsDAO.getLyricById(RandomId);
+		
 		return getRandomLyric;
+
 	}
 }

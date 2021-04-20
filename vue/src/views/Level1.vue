@@ -13,7 +13,7 @@
         {{ headerFront }}
       </div>
       <div class="card-content center">
-        <p v-bind:style="{ fontWeight: 'bold' }">{{ randomLevel1.lyric }}</p>
+        <p v-bind:style="{ fontWeight: 'bold' }"><pre style="font-family:arial;">{{ randomLevel1Lyric }}</pre></p>
         <p>{{ randomLyricSong.genre }}</p>
         <p>{{ randomLevel1.year_released }}</p>
         <img v-if="imgFront != ''" :src="imgFront" width="200" height="200" />
@@ -126,11 +126,15 @@ export default {
       default: "Click the Next Lyric button to continue",
     },
   },
-  /*computed: {
-      randomLevel1() {
-          return this.$store.state.lyrics[0];
+  computed: {
+      randomLevel1Lyric() {
+        if (!this.randomLevel1.lyric) {
+          return "";
+        }  else {
+            return this.randomLevel1.lyric.replace(/\\n/g,'\n');
+          }
       }
-  },*/
+  },
   created() {
     LyricService.getRandomLyric().then((response) => {
       this.randomLevel1 = response.data;
@@ -146,25 +150,9 @@ export default {
       });
     });
 
-    //1) MOVE randomLevel1 to DATA
-    //        -in Data make randomLyricArtist
-    //        -in Data make randomLyricSong
-    //2) In CREATED, set randomLevel1 to a random lyric in this.$store.state.lyrics
-    //        finding any random lyric
-    //3) create service to get Artist by id  (randomLevel1.artistId)-> Eclipse
-    //        -save in randomLyricArtist
-    //4) create service to get Song by id   (randomLevel1.songId)-> Eclipse
-    //        - save in randomLyricSong
-    //5) UPdate line 17 to have the answer
-    //        {{randomSong.title}} - {{randomLyricArtist.name}}
   },
   methods: {
     /**
-     * 1) create a method and put the contents of CREATED() in it
-     * 2) call the method from CREATED()
-     * 3) add the button to the HTML
-     * 4) v-on the button click call the new method
-     * ---
      * 1) update randomLyric java code to accept a parameter for the lyric level
      */
     getNextRandomLyric() {
