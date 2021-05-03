@@ -2,38 +2,49 @@
     <div class="home">
         <h1>Welcome to the best lyrics app!</h1>
         <h2>Guess the Song and Artist</h2>
- <!--   <img src="../assets/musicnotes.jpg" alt="Musical Notes"> -->
-  <!--  <lyric/> -->
         <div @click="isToggle=!isToggle" v-bind:style="{backgroundColor: colorFront, color: colorTextFront}" v-show="!isToggle" class="animated flipInX flashcardhome">
-            <div class="card-header" style="padding-bottom: 15px;"> {{headerFront}}</div>
+            <div class="card-header" style="padding-bottom: 15px;"> {{ headerFront }}</div>
             <div class="card-content center">
-                <p v-bind:style="{fontWeight: 'bold'}">{{front}}</p>
+                <p v-bind:style="{fontWeight: 'bold'}"><pre style="font-family: Quicksand;">{{ randomLevelLyric }}</pre></p>
+                <p>{{randomLyricSong.genre}}</p>
+                <p>{{randomLevel.year_released}}</p>
                 <img v-if="imgFront!=''" :src="imgFront" width="200" height="200">
             </div>
-            <div class="card-footer" style="margin: 75px;">{{footerFront}}</div>
+            <div class="card-footer" style="">{{footerFront}}</div>
         </div>
         <div @click="isToggle=!isToggle" v-bind:style="{backgroundColor: colorBack, color: colorTextBack}" v-show="isToggle" class="animated flipInX flashcardhome">
             <div class="card-header" style="padding-bottom: 15px;"> {{headerBack}}</div>
             <div class="card-content center">
-                <p v-bind:style="{fontSize: textSizeBack, fontWeight: 'bold'}">{{back}}</p>
+                <p v-bind:style="{ fontSize: textSizeBack, fontWeight: 'bold'}">{{ randomLyricArtist.artist_name }}</p>
+                <p v-bind:style="{fontSize: textSizeBack}">{{ randomLyricSong.title }}</p>
                 <img v-if="imgBack!=''" :src="imgBack" width="200" height="200">
             </div>
             <div class="card-footer">{{footerBack}}</div>
         </div>
+        <button v-on:click="getNextRandomLyric">Next Lyric</button>
     </div>
 </template>
 
 <script>
-
 //import Lyric from './Lyric.vue'
 import LyricService from '../services/LyricService'
+import ArtistService from '../services/ArtistService'
+import SongService from '../services/SongService'
 export default {
   name: 'home',
+  components: {
+
+  },
+
   data() {
     return {
       isToggle: false,
-      lyrics: []
-    }
+      randomLevel: {
+          lyrics: "",
+      },
+      randomLyricArtist: {},
+      randomLyricSong: {},
+    };
   },
   props: {
     imgFront: {
@@ -66,7 +77,7 @@ export default {
     },
     colorTextBack: {
         type: String,
-        default: 'red'
+        default: 'white'
     },
     colorFront: {
         type: String,
@@ -91,28 +102,51 @@ export default {
     footerBack: {
         type: String,
         default: 'Click the Next Lyric button to continue'
-    },
-   
+    }, 
   },
-  mounted() {
-    console.log('Component mounted')
+  computed: {
+      randomLevelLyric() {
+          if (!this.randomLevel.lyric) {
+              return "";
+          } else {
+              return this.randomLevel.lyric.replace(/\\n/g, '\n');
+          }
+      }
   },
   created() {
-    LyricService.getLyrics().then(response => {
-      this.lyrics = response.data;
-    })
+    LyricService.getRandomLyric().then(response => {
+      this.randomLevel = response.data;
+
+      SongService.getSongById(this.randomLevel.song_id).then((response) => {
+          this.randomLyricSong = response.data;
+
+          ArtistService.getArtistById(this.randomLyricSong.artist_id).then((response) => {
+              this.randomLyricArtist = response.data;
+          });
+      });
+    });
   },
   methods: {
-    viewLyrics(id) {
+      getNextRandomLyric() {
+          LyricService.getRandomLyric().then((response) => {
+              this.randomLevel = response.data;
+
+              SongService.getSongById(this.randomLevel.song_id).then((response) => {
+                  this.randomLyricSong = response.data;
+
+                  ArtistService.getArtistById(this.randomLyricSong.artist_id).then((response) => {
+                      this.randomLyricArtist = response.data;
+
+                      this.isToggle = false;
+                  });
+              });
+          });
+      },
+      viewLyrics(id) {
       this.$router.push(`/lyric/${id}`);
-    }
-
+    },
   },
-  components: {
-
-   // Lyric
-  }
-}
+};
 </script>
 
 <style>

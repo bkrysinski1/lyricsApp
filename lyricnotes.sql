@@ -1,10 +1,13 @@
-
+UPDATE lyrics
+SET lyrics = 'Cutting up the floor in a sorority t-shirt\nThe same one you wore when we were\nSky high in Colorado, \nyour lips pressed against the bottle\nSwearing on a Bible, baby, I''d never leave ya\nI remember how bad I need ya'
+WHERE lyrics = 'Cutting up the floor in a sorority t-shirt\nThe same one you wore when we were\nSky high in Colorado, your lips pressed against the bottle\nSwearing on a Bible, baby, I''d never leave ya\nI remember how bad I need ya';
+/*
 INSERT INTO song (artist_id, title, genre, year_released, difficulty_level)
 VALUES (15, 'Bluebird', 'Country', 2019, 3);
 
 INSERT INTO lyrics (song_id, lyrics, year_released, difficulty_level)
 VALUES (20, 'And if the house just keeps on winning\nI got a wildcard up my sleeve\nAnd if love keeps giving me lemons\nI''ll just mix ''em in my drink', 2019, 3);
-/*
+
 INSERT INTO artist (artist_name)
 VALUES ('Dan + Shay');
 

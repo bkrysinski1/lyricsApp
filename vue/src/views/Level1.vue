@@ -3,29 +3,17 @@
     <div class="level1">
       <h1>Welcome to Difficulty Level 1</h1>
     </div>
-    <div
-      @click="isToggle = !isToggle"
-      v-bind:style="{ backgroundColor: colorFront, color: colorTextFront }"
-      v-show="!isToggle"
-      class="animated flipInX flashcard1"
-    >
-      <div class="card-header" style="padding-bottom: 15px">
-        {{ headerFront }}
-      </div>
+    <div @click="isToggle = !isToggle" v-bind:style="{ backgroundColor: colorFront, color: colorTextFront }" v-show="!isToggle" class="animated flipInX flashcard1">
+      <div class="card-header" style="padding-bottom: 15px">{{ headerFront }}</div>
       <div class="card-content center">
-        <p v-bind:style="{ fontWeight: 'bold' }"><pre style="font-family:arial;">{{ randomLevel1Lyric }}</pre></p>
+        <p v-bind:style="{ fontWeight: 'bold' }"><pre style="font-family:Quicksand;">{{ randomLevel1Lyric }}</pre></p>
         <p>{{ randomLyricSong.genre }}</p>
         <p>{{ randomLevel1.year_released }}</p>
         <img v-if="imgFront != ''" :src="imgFront" width="200" height="200" />
       </div>
-      <div class="card-footer" style="margin: 75px">{{ footerFront }}</div>
+      <div class="card-footer" style="margin: 60px">{{ footerFront }}</div>
     </div>
-    <div
-      @click="isToggle = !isToggle"
-      v-bind:style="{ backgroundColor: colorBack, color: colorTextBack }"
-      v-show="isToggle"
-      class="animated flipInX flashcard1"
-    >
+    <div @click="isToggle = !isToggle" v-bind:style="{ backgroundColor: colorBack, color: colorTextBack }" v-show="isToggle" class="animated flipInX flashcard1">
       <div class="card-header" style="padding-bottom: 15px">
         {{ headerBack }}
       </div>
@@ -145,8 +133,7 @@ export default {
         ArtistService.getArtistById(this.randomLyricSong.artist_id).then(
           (response) => {
             this.randomLyricArtist = response.data;
-          }
-        );
+          });
       });
     });
 
@@ -156,7 +143,7 @@ export default {
      * 1) update randomLyric java code to accept a parameter for the lyric level
      */
     getNextRandomLyric() {
-      LyricService.getRandomLyric().then((response) => {
+      LyricService.getRandomLyric(1).then((response) => {
         this.randomLevel1 = response.data;
 
         SongService.getSongById(this.randomLevel1.song_id).then((response) => {

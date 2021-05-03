@@ -11,7 +11,11 @@ export default {
         return axios.get(`/lyrics/${id}`, id);
     },
 
-    getRandomLyric() {
-        return axios.get(`/lyrics/random`);
+    getRandomLyric(difficultyLevel) {
+        if (difficultyLevel) { 
+            return axios.get(`/lyrics/random?difficultyLevel=${difficultyLevel}`);
+        } else {
+            return axios.get(`/lyrics/random`);
+        }
     }
 }

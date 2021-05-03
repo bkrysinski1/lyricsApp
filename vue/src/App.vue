@@ -106,7 +106,7 @@ button {
 }
 
 html {
- background: url("~@/assets/musicnotes.jpg");
+  background: url("~@/assets/musicnotes.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;

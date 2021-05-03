@@ -42,6 +42,18 @@ public class LyricsSqlDAO implements LyricsDAO {
 			throw new RuntimeException("lyricId " + lyricId + "was not found.");
 		}
 	}
+	
+	@Override
+	public List<Lyrics> getLyricByDifficultyLevel(int difficultyLevel) {
+		List<Lyrics> lyricsByLevel = new ArrayList<>();
+		String sql = "SELECT * FROM lyrics WHERE difficulty_level = ?";
+		SqlRowSet results = jdbcTemplate.queryForRowSet(sql, difficultyLevel);
+		while(results.next()) {
+			Lyrics lyric = mapRowToLyrics(results);
+			lyricsByLevel.add(lyric);
+		}
+		return lyricsByLevel;
+	}
 
 	private Lyrics mapRowToLyrics(SqlRowSet rs) {
 		Lyrics lyrics = new Lyrics();
