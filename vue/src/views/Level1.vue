@@ -36,11 +36,11 @@
 import LyricService from "../services/LyricService";
 import ArtistService from "../services/ArtistService";
 import SongService from "../services/SongService";
-//import Flashcard from '../components/Flashcard'
+
 export default {
   name: "level1",
   components: {
-    //  Flashcard
+    
   },
 
   data() {
@@ -51,9 +51,6 @@ export default {
       },
       randomLyricArtist: {},
       randomLyricSong: {},
-      //  return this.$store.state.lyrics[0];
-
-      //  lyrics: []
     };
   },
   props: {
@@ -136,12 +133,8 @@ export default {
           });
       });
     });
-
   },
   methods: {
-    /**
-     * 1) update randomLyric java code to accept a parameter for the lyric level
-     */
     getNextRandomLyric() {
       LyricService.getRandomLyric(1).then((response) => {
         this.randomLevel1 = response.data;
@@ -156,9 +149,6 @@ export default {
         });
       });
     },
-  /*  resetToggle() {
-      this.isToggle = false;
-    },*/
     viewLyrics(id) {
       this.$router.push(`/lyric/${id}`);
     },

@@ -77,7 +77,7 @@ export default {
     },
     colorTextBack: {
         type: String,
-        default: 'white'
+        default: 'red'
     },
     colorFront: {
         type: String,
