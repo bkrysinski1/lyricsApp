@@ -11,7 +11,7 @@
                 <p>{{ randomLevel3.year_released}}</p>
                 <img v-if="imgFront!=''" :src="imgFront" width="200" height="200">
             </div>
-            <div class="card-footer" style="margin: 60px;">{{footerFront}}</div>
+            <div class="card-footer" style="">{{footerFront}}</div>
         </div>
         <div @click="isToggle=!isToggle" v-bind:style="{backgroundColor: colorBack, color: colorTextBack}" v-show="isToggle" class="animated flipInX flashcard3">
             <div class="card-header" style="padding-bottom: 15px;"> {{headerBack}}</div>
@@ -115,7 +115,7 @@ export default {
       }
   },
   created() {
-    LyricService.getRandomLyric().then(response => {
+    LyricService.getRandomLyric(3).then(response => {
       this.randomLevel3 = response.data;
 
       SongService.getSongById(this.randomLevel3.song_id).then(response => {
@@ -129,6 +129,7 @@ export default {
   },
   methods: {
       getNextRandomLyric() {
+          this.isToggle = false;
           LyricService.getRandomLyric(3).then(response => {
               this.randomLevel3 = response.data;
 
@@ -137,7 +138,7 @@ export default {
 
                   ArtistService.getArtistById(this.randomLyricSong.artist_id).then(response => {
                       this.randomLyricArtist = response.data;
-                      this.isToggle = false;
+                      
                   });
               });
           });

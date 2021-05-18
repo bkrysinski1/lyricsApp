@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <h1>Welcome to the best lyrics app!</h1>
-        <h2>Guess the Song and Artist</h2>
+        <h2>Guess the Artist and Song</h2>
         <div @click="isToggle=!isToggle" v-bind:style="{backgroundColor: colorFront, color: colorTextFront}" v-show="!isToggle" class="animated flipInX flashcardhome">
             <div class="card-header" style="padding-bottom: 15px;"> {{ headerFront }}</div>
             <div class="card-content center">
@@ -128,6 +128,7 @@ export default {
   },
   methods: {
       getNextRandomLyric() {
+          this.isToggle = false;
           LyricService.getRandomLyric().then((response) => {
               this.randomLevel = response.data;
 
@@ -137,7 +138,7 @@ export default {
                   ArtistService.getArtistById(this.randomLyricSong.artist_id).then((response) => {
                       this.randomLyricArtist = response.data;
 
-                      this.isToggle = false;
+                      
                   });
               });
           });
