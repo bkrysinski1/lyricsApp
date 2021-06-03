@@ -3,11 +3,9 @@ SELECT *
 FROM lyrics;
 SELECT 'INSERT INTO lyrics(lyric_id, song_id, lyrics, year_released, difficulty_level) VALUES ('||lyric_id || ', '||song_id ||',''' ||lyrics|| ''',' ||year_released||','||difficulty_level||');' FROM lyrics
 */
-/*
 SELECT *
 FROM artist;
 SELECT 'INSERT INTO artist(artist_id, artist_name) VALUES ('||artist_id|| ','''||artist_name||''');' FROM artist
-*/
 /*
 SELECT *
 FROM song;
