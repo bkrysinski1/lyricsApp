@@ -84,16 +84,6 @@ export default {
             default: 'Click the Next Lyric button to continue'
         }
     }
-    /*computed: {
-        isToggle () {
-            return this.$store.state.cardFlipped
-        },
-    },
-    methods: {
-        flipCard () {
-            this.$store.commit('flipCard')
-        },
-    },*/
 }
 </script>
 

@@ -54,21 +54,5 @@ public class LyricsController {
 			RandomId = lyricGenerator.nextInt((countLyrics));
 			return lyricsByDifficultyLevel.get((int) RandomId);
 		}
-		
-//			while (RandomId == 0) {
-//				RandomId = lyricGenerator.nextInt((countLyrics) + 1);
-//			}
-//			Lyrics getLyricByDifficultyLevel = lyricsDAO.getLyricByDifficultyLevel(difficultyLevel);
-//				return null;
-		
-//	Lyrics getRandomLyric = lyricsDAO.getLyricById(RandomId);
-//
-//	return getRandomLyric;
 	}
-
-//	@RequestMapping(path = "/lyrics/{level}/difficultyLevel", method = RequestMethod.GET)
-//	public Lyrics getLyricByDifficultyLevel(@PathVariable("level")int difficultyLevel) {
-//		Lyrics getLyricByDifficultyLevel = lyricsDAO.getLyricByDifficultyLevel(difficultyLevel);
-//		return getLyricByDifficultyLevel;
-//	}
 }

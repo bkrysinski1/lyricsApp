@@ -156,7 +156,6 @@ export default {
   font-family: 'Quicksand', sans-serif;
   text-align: center;
   width: 100%;
-  /*margin: 5px;*/
   color:darkgreen;
   background-color: rgb(7, 12, 12);
   /*background-image: linear-gradient(to right, lime, green, darkgreen);*/

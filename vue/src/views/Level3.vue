@@ -156,7 +156,6 @@ export default {
   font-family: 'Quicksand', sans-serif;
   text-align: center;
   width: 100%;
-  /*margin: 5px;*/
   color: red;
   background-color: rgb(7, 12, 12);
   background-image: radial-gradient(yellow, orange, red);

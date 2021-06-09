@@ -5,11 +5,7 @@
 </template>
 
 <style scoped>
-/*h2 {
-    background-color:rgb(153, 153, 153);
-    background-image: radial-gradient(white, gray, black);
-    margin-top: 50px;
-}*/
+
 </style>
 
 <script>

@@ -163,13 +163,11 @@ export default {
   font-family: "Quicksand", sans-serif;
   text-align: center;
   width: 100%;
-  /*margin: 5px;*/
   color: purple;
   background-color: rgb(7, 12, 12);
   background-image: radial-gradient(aqua, blue, purple);
   opacity: 90%;
 }
-
 .center {
   text-align: center;
 }

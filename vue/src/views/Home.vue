@@ -26,7 +26,6 @@
 </template>
 
 <script>
-//import Lyric from './Lyric.vue'
 import LyricService from '../services/LyricService'
 import ArtistService from '../services/ArtistService'
 import SongService from '../services/SongService'

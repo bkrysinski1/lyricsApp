@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-
-
 export default {
     getLyrics() {
         return axios.get(`/lyrics`);
